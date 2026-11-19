@@ -1,0 +1,45 @@
+import os
+
+def clear_screen():
+    os.system("clear")
+
+def display_state(word_secure, counter):
+    clear_screen()
+    print(f"Осталось {counter} попыток.")
+    print(' '.join(word_secure))
+
+def get_input():
+    return input("Введите букву: ").lower()
+
+def update_secure_word(word, word_secure, letter):
+    for i in range(len(word)):
+        if word[i] == letter:
+            word_secure[i] = letter
+    return word_secure
+
+def show_end_game_message(word, is_win):
+    clear_screen()
+    if is_win:
+        print(f"Победа! Загаданное слово: {word}")
+    else:
+        print("Вас вздёрнули на рее!")
+
+def game():
+    word = " рарпоащзуавзпу "
+    word_secure = ["_"] * len(word)
+    counter = 70
+    
+    while counter > 0 and "_" in word_secure:
+        display_state(word_secure, counter)
+        letter = get_input()
+        
+        if letter in word:
+            word_secure = update_secure_word(word, word_secure, letter)
+        else:
+            counter -= 1
+            
+    is_win = "_" not in word_secure
+    show_end_game_message(word, is_win)
+
+if __name__ == "__main__":
+    game()
